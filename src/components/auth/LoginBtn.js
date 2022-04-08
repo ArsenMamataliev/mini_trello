@@ -15,7 +15,6 @@ function LoginBtn() {
 
   const onSuccess = (res) => {
     console.log('Login Success');
-    console.log(res.profileObj);
     localStorage.setItem('name', res.profileObj.name);
     localStorage.setItem('imageUrl', res.profileObj.imageUrl);
     dispatch(loggedIn());

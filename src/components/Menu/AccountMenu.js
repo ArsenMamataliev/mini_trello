@@ -7,12 +7,27 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
+import TaskIcon from '@mui/icons-material/Task';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import Logout from '@mui/icons-material/Logout';
 import LogoutBtn from '../auth/LogoutBtn';
+import { useSelector } from 'react-redux';
+import { useEffect, useState} from 'react';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dash = useSelector(state=>state.dashboards);
+  const [taskQuantity, setTaskQuantity] = useState(0); 
+
+  useEffect(() => {
+    // calculate quantiry of tasks
+    let quantity = 0;
+    dash.map(item => item.tasks.length);
+    setTaskQuantity(quantity);
+    console.log(quantity);
+  },[dash]);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -26,9 +41,15 @@ export default function AccountMenu() {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'center'}}>
+        <MenuItem>
+          <DashboardCustomizeIcon sx={{color: "white", marginRight: "5px"}}/> {dash.length}
+        </MenuItem>
+        <MenuItem>
+          <TaskIcon sx={{color: "white", marginRight: "5px"}}/> {taskQuantity}
+        </MenuItem>
         <Tooltip title="Account settings">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 50, height: 50 }}>
+            <Avatar className="avatar">
               <img id="avatar_image" src={imageUrl} alt="user_image" />
             </Avatar>
           </IconButton>

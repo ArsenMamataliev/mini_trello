@@ -3,15 +3,25 @@ import DashboardBox from '../components/dashboard/DashboardBox';
 import AccountMenu from '../components/Menu/AccountMenu';
 import { useSelector } from 'react-redux';
 import LoginBtn from '../components/auth/LoginBtn';
+import ScrollToTop from 'react-scroll-up';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 function Dashboard() {
     const loggedIn = useSelector(state=>state.loggedIn);
     return (
         <div>
             {
-                loggedIn? <AccountMenu /> : <LoginBtn/>
+                loggedIn? 
+                    <>
+                        <AccountMenu /> 
+                        <DashboardBox/>
+                    </>
+                    : <LoginBtn/>
             }
-            <DashboardBox/>
+            
+            <ScrollToTop showUnder={500}>
+                <ArrowUpwardIcon sx={{ color: "red", fontSize: 40}}/>
+            </ScrollToTop>
         </div>
     )
 }
