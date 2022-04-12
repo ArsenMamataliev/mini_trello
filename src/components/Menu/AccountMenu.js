@@ -20,13 +20,6 @@ export default function AccountMenu() {
   const dash = useSelector(state=>state.dashboards);
   const [taskQuantity, setTaskQuantity] = useState(0); 
 
-  useEffect(() => {
-    // calculate quantiry of tasks
-    let quantity = 0;
-    dash.map(item => item.tasks.length);
-    setTaskQuantity(quantity);
-    console.log(quantity);
-  },[dash]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

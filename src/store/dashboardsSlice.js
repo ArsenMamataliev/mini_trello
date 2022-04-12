@@ -8,24 +8,36 @@ const dashboardsSlice = createSlice({
     reducers:{
         addDash(state, action){
             let {id, dashboardName} = action.payload;
-            state.push({id: id, name: dashboardName, tasks:[]});   
+            dashboardName.length !== 0 && state.push({id: id, name: dashboardName, tasks:[]});   
         },
         addTask(state, action){
-            action.payload && state[action.payload.index].tasks.push({
-                taskId: action.payload.taskId,
-                taskName: action.payload.taskName,
-                taskStatus: action.payload.taskStatus,
-                });   
-           },  
+            let taskName = action.payload.taskName;
+            let taskStatus = action.payload.taskStatus;
+            if (taskName.length !== 0 || taskName ==="underfined"){
+                if(taskStatus === "Low"){
+                    state[action.payload.index].tasks.push({
+                        taskId: action.payload.taskId,
+                        taskName,
+                        taskStatus,
+                    }
+                    )} else {
+                    state[action.payload.index].tasks.unshift({
+                        taskId: action.payload.taskId,
+                        taskName,
+                        taskStatus,  
+                    })
+                }
+            }
+        }, 
+        deleteTask(state, action){
+            
+        },
+
         deleteDash(state, action){
             return  state.filter(item => item.id !== action.payload);
-        },
-        renameDash(state, action){
-            
         }
-
     }
 })
 
-export const{addDash, addTask, deleteDash, renameDash}=dashboardsSlice.actions;
+export const{addDash, addTask, deleteDash, renameDash, deleteTask}=dashboardsSlice.actions;
 export default dashboardsSlice.reducer;  
